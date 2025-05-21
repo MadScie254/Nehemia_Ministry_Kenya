@@ -23,6 +23,7 @@
                         primary: '#2563eb', /* A shade of blue for primary actions/branding */
                         secondary: '#f97316', /* A shade of orange for accents */
                         neutral: '#f3f4f6', /* Light gray for backgrounds */
+                        'neutral-medium': '#D1D5DB', /* Lighter gray for footer text (gray-300) */
                         dark: '#1f2937', /* Dark gray for text */
                     }
                 }
@@ -142,7 +143,99 @@
         .hero-text-shadow {
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* More subtle shadow */
         }
+        .hero-title-gradient {
+            background: linear-gradient(to right, #FFD700, #FFA500, #FF4500); /* Yellow to Orange to Red */
+            -webkit-background-clip: text;
+            -moz-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            -moz-text-fill-color: transparent;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        .text-gradient { /* This was the original hero title gradient, keeping it in case it's used elsewhere or for fallback */
+            background: linear-gradient(to right, #FDB813, #FFA500); 
+            -webkit-background-clip: text;
+            -moz-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent; 
+            -moz-text-fill-color: transparent;
+        }
         /* Add more custom styles if needed, but prefer Tailwind/Bootstrap utilities */
+        .hero-text {
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid #FFD700;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            animation: typing 3.5s steps(40, end),
+                       blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #FFD700 }
+        }
+
+        .bible-verse {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .bible-verse.active {
+            opacity: 1;
+        }
+
+        .hero-overlay {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+        }
+
+        /* Add these new aesthetic styles */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #FFD700; }
+            to { box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #FFD700; }
+        }
+
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .text-gradient {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -163,7 +256,7 @@
             </button>
 
             <div :class="{'block': open, 'hidden': !open}" class="w-full lg:block lg:w-auto mt-4 lg:mt-0" id="navbarSupportedContent">
-                <ul class="flex flex-col lg:flex-row lg:space-x-8 rtl:space-x-reverse text-lg font-medium lg:items-center">
+                <ul class="flex flex-col lg:flex-row lg:space-x-4 xl:space-x-6 rtl:space-x-reverse text-lg font-medium lg:items-center">
                     <li><a href="index.html" class="nav-link block py-2 px-3 text-white hover:text-primary rounded lg:bg-transparent lg:p-0 active" aria-current="page">Home</a></li>
                     <li><a href="about.html" class="nav-link block py-2 px-3 text-white hover:text-primary rounded lg:bg-transparent lg:p-0">About Us</a></li>
                     <li><a href="sermons.html" class="nav-link block py-2 px-3 text-white hover:text-primary rounded lg:bg-transparent lg:p-0">Sermons</a></li>
@@ -184,11 +277,15 @@
 
     <main>
         <!-- Hero Section -->
-        <section class="hero-section flex items-center justify-center text-center py-20 px-4">
-            <div class="container mx-auto">
-                <h1 class="text-5xl md:text-6xl font-bold mb-6 hero-text-shadow" id="hero-quote" style="color: #FFD700;">Welcome to Nehemia Ministry Kenya: A Sanctuary of Faith, Hope, and Transformation</h1>
-                <p class="text-xl md:text-2xl mb-10 hero-text-shadow md:w-3/4 mx-auto" style="color: #FFD700;">
-                    Founded in 2006 by the visionary leadership of Bishop David Walukhu and Reverend Selina Walukhu, Nehemia Ministry Kenya stands as a vibrant testament to God's enduring love and power in Mukhonje, Kakamega County, and across the nation. We are a dynamic, spirit-filled community dedicated to holistic transformation – nurturing souls, empowering minds, healing bodies, and uplifting communities through the unwavering truth of the Gospel and tangible acts of compassion. Join us on this incredible journey of faith as we impact lives and extend God's kingdom.
+        <section class="hero-section relative flex items-center justify-center text-center py-20 px-4">
+            <div class="hero-overlay absolute inset-0"></div>
+            <div class="container mx-auto relative z-10">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 hero-text typewriter" id="hero-quote">Welcome to the Heart of Nehemia Ministry Kenya</h1>
+                <div class="bible-verse text-xl md:text-2xl mb-8 md:w-3/4 mx-auto text-white" id="bible-verse">
+                    "For I know the plans I have for you," declares the LORD, "plans to prosper you and not to harm you, plans to give you hope and a future." - Jeremiah 29:11
+                </div>
+                <p class="text-xl md:text-2xl mb-8 md:w-3/4 mx-auto text-white">
+                    Founded in 2006 by the visionary leadership of Bishop David Walukhu and Reverend Selina Walukhu, Nehemia Ministry Kenya stands as a vibrant testament to God's enduring love and power in Mukhonje, Kakamega County, and across the nation.
                 </p>
                 <a href="about.html" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-3 px-8 rounded-lg text-lg gsap-button-hover">Discover Our Story & Mission</a>
             </div>
@@ -204,17 +301,26 @@
                 
                 <!-- Animated Counters -->
                 <div class="grid md:grid-cols-3 gap-8 mb-12 text-center">
-                    <div class="p-6 bg-white rounded-lg shadow-md gsap-fade-in" data-gsap-delay="0.2">
-                        <h3 class="text-4xl lg:text-5xl font-bold text-blue-600" x-data="{ count: 0 }" x-intersect:enter="gsap.to($data, { count: 18, duration: 2.5, ease: 'power2.out', onUpdate: () => $el.textContent = Math.floor($data.count) + '+' })">0+</h3>
-                        <p class="text-gray-600 mt-2 text-lg">Years of Dedicated Ministry</p>
+                    <div class="p-6 bg-white rounded-lg shadow-md gsap-fade-in card-hover" data-gsap-delay="0.2">
+                        <div class="floating">
+                            <i class="fas fa-church text-4xl text-blue-600 mb-4"></i>
+                            <h3 class="text-4xl lg:text-5xl font-bold text-blue-600 counter" data-target="18">0+</h3>
+                            <p class="text-gray-600 mt-2 text-lg">Years of Dedicated Ministry</p>
+                        </div>
                     </div>
-                    <div class="p-6 bg-white rounded-lg shadow-md gsap-fade-in" data-gsap-delay="0.3">
-                        <h3 class="text-4xl lg:text-5xl font-bold text-green-600" x-data="{ count: 0 }" x-intersect:enter="gsap.to($data, { count: 50, duration: 2.5, ease: 'power2.out', onUpdate: () => $el.textContent = Math.floor($data.count) + '+' })">0+</h3>
-                        <p class="text-gray-600 mt-2 text-lg">Communities & Villages Impacted</p>
+                    <div class="p-6 bg-white rounded-lg shadow-md gsap-fade-in card-hover" data-gsap-delay="0.3">
+                        <div class="floating">
+                            <i class="fas fa-users text-4xl text-green-600 mb-4"></i>
+                            <h3 class="text-4xl lg:text-5xl font-bold text-green-600 counter" data-target="50">0+</h3>
+                            <p class="text-gray-600 mt-2 text-lg">Communities & Villages Impacted</p>
+                        </div>
                     </div>
-                    <div class="p-6 bg-white rounded-lg shadow-md gsap-fade-in" data-gsap-delay="0.4">
-                        <h3 class="text-4xl lg:text-5xl font-bold text-yellow-600" x-data="{ count: 0 }" x-intersect:enter="gsap.to($data, { count: 10000, duration: 3, ease: 'power2.out', onUpdate: () => $el.textContent = Math.floor($data.count).toLocaleString() + '+' })">0+</h3>
-                        <p class="text-gray-600 mt-2 text-lg">Lives Touched Annually Through Christ</p>
+                    <div class="p-6 bg-white rounded-lg shadow-md gsap-fade-in card-hover" data-gsap-delay="0.4">
+                        <div class="floating">
+                            <i class="fas fa-heart text-4xl text-yellow-600 mb-4"></i>
+                            <h3 class="text-4xl lg:text-5xl font-bold text-yellow-600 counter" data-target="1000">0+</h3>
+                            <p class="text-gray-600 mt-2 text-lg">Lives Touched Annually Through Christ</p>
+                        </div>
                     </div>
                 </div>
 
@@ -613,27 +719,21 @@
                         preloader.classList.add('hidden');
                     }
                 });
+                setupPreloaderMessages(); // Initialize preloader messages
+
+                // Animate hero title entrance
+                const heroTitle = document.querySelector('.animate-hero-title-appear');
+                if (heroTitle) {
+                    gsap.from(heroTitle, { 
+                        opacity: 0, 
+                        y: 30, 
+                        duration: 1.2, 
+                        ease: 'power2.out', 
+                        delay: 0.5 // Delay after preloader hides
+                    });
+                }
             });
 
-            // Example: Hero quote typewriter
-            const heroQuote = document.getElementById('hero-quote');
-            if(heroQuote){
-                const text = heroQuote.textContent.trim(); // Trim whitespace
-                if (text) { // Only run if text is not empty
-                    heroQuote.textContent = '';
-                    let i = 0;
-                    function typeWriter() {
-                        if (i < text.length) {
-                            heroQuote.textContent += text.charAt(i);
-                            i++;
-                            setTimeout(typeWriter, 100); // Adjust speed here
-                        }
-                    }
-                    // Start after a slightly longer delay to ensure preloader is gone
-                    setTimeout(typeWriter, 1200); 
-                }
-            }
-            
             // GSAP Scroll-based Animations
             gsap.utils.toArray('.animate-on-scroll').forEach(section => {
                 gsap.from(section, {
@@ -685,7 +785,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = ""; // Canvas will automatically provide the API key at runtime
+                const apiKey = "AIzaSyCOyiZkk8t7zFtX4zC9G4v66MPJfgjIi84"; // Canvas will automatically provide the API key at runtime
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 try {
@@ -742,6 +842,93 @@
                 }
             }
 
+            // Add this to your existing script section
+            const bibleVerses = [
+                '"For I know the plans I have for you," declares the LORD, "plans to prosper you and not to harm you, plans to give you hope and a future." - Jeremiah 29:11',
+                '"I can do all things through Christ who strengthens me." - Philippians 4:13',
+                '"The LORD is my shepherd; I shall not want." - Psalm 23:1',
+                '"Be strong and courageous. Do not be afraid; do not be discouraged, for the LORD your God will be with you wherever you go." - Joshua 1:9',
+                '"Trust in the LORD with all your heart and lean not on your own understanding." - Proverbs 3:5',
+                '"For God so loved the world that he gave his one and only Son." - John 3:16',
+                '"The joy of the LORD is your strength." - Nehemiah 8:10',
+                '"Cast your cares on the LORD and he will sustain you." - Psalm 55:22',
+                '"Be still, and know that I am God." - Psalm 46:10',
+                '"Love is patient, love is kind." - 1 Corinthians 13:4',
+                '"But those who hope in the LORD will renew their strength. They will soar on wings like eagles." - Isaiah 40:31',
+                '"The LORD is my light and my salvation—whom shall I fear?" - Psalm 27:1',
+                '"Give thanks in all circumstances; for this is God\'s will for you in Christ Jesus." - 1 Thessalonians 5:18',
+                '"Let all that you do be done in love." - 1 Corinthians 16:14',
+                '"Rejoice always, pray continually, give thanks in all circumstances." - 1 Thessalonians 5:16-18',
+                '"The LORD is close to the brokenhearted and saves those who are crushed in spirit." - Psalm 34:18',
+                '"But seek first his kingdom and his righteousness, and all these things will be given to you as well." - Matthew 6:33',
+                '"I have told you these things, so that in me you may have peace. In this world you will have trouble. But take heart! I have overcome the world." - John 16:33',
+                '"And we know that in all things God works for the good of those who love him." - Romans 8:28',
+                '"The LORD bless you and keep you; the LORD make his face shine on you and be gracious to you." - Numbers 6:24-25'
+            ];
+
+            let currentVerseIndex = 0;
+            const verseElement = document.getElementById('bible-verse');
+
+            function rotateVerses() {
+                verseElement.classList.remove('active');
+                setTimeout(() => {
+                    currentVerseIndex = (currentVerseIndex + 1) % bibleVerses.length;
+                    verseElement.textContent = bibleVerses[currentVerseIndex];
+                    verseElement.classList.add('active');
+                }, 1000);
+            }
+
+            // Rotate verses every 5 seconds
+            setInterval(rotateVerses, 5000);
+
+            // Add this to your existing script section
+            function animateCounter(element, target, duration = 2000) {
+                let start = 0;
+                const increment = target / (duration / 16);
+                const timer = setInterval(() => {
+                    start += increment;
+                    if (start >= target) {
+                        element.textContent = Math.floor(target).toLocaleString() + '+';
+                        clearInterval(timer);
+                    } else {
+                        element.textContent = Math.floor(start).toLocaleString() + '+';
+                    }
+                }, 16);
+            }
+
+            // Initialize counters when they come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseInt(counter.getAttribute('data-target'));
+                        animateCounter(counter, target);
+                        observer.unobserve(counter);
+                    }
+                });
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                // Observe counter elements
+                document.querySelectorAll('.counter').forEach(counter => {
+                    observer.observe(counter);
+                });
+            });
+
+            // Add floating animation to elements
+            document.querySelectorAll('.floating').forEach(element => {
+                element.classList.add('floating');
+            });
+
+            // Add glow effect to important elements
+            document.querySelectorAll('.glow').forEach(element => {
+                element.classList.add('glow');
+            });
+
+            // Add card hover effect
+            document.querySelectorAll('.card-hover').forEach(element => {
+                element.classList.add('card-hover');
+            });
         });
     </script>
 </body>
